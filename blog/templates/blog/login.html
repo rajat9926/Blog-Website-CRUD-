@@ -1,0 +1,20 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Login Page{% endblock title %}
+
+
+{% block content %}
+<h1>Login Form</h1>
+<form action="" method='post' class='my-3' novalidate>
+    {% csrf_token %}
+    {% for items in loginform %}
+        {{items.label_tag}} {{items}} <span class="text-warning">{{items.errors|striptags}}</span> <br>
+    {% endfor %}
+<br>  <button type="submit" class="btn btn-primary">Login</button>
+</form>
+{% if loginform.non_field_errors %}
+    {% for nfr in loginform.non_field_errors %}
+        {{nfr}}
+    {% endfor %}
+{% endif %}
+{% endblock content %}

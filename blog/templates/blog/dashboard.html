@@ -1,0 +1,46 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Dashboard Page{% endblock title %}
+
+
+{% block content %}
+{% if messages %}
+{% for msg in messages %}
+<span class="alert alert-success my-1">{{msg}}</span>
+{% endfor %}
+{% endif %}
+
+<h1>{{count}}</h1>
+
+<form action="" method='post' class="my-3">
+    {% csrf_token %}
+    {% for items in postform %}
+       {{items.label_tag}} {{items}} <br>
+    {% endfor %}
+    <button type="submit">Submit</button>
+</form>
+<table class="table table-hover bg-white">
+    <thead>
+        <tr class='text-center'>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for blog in blogs %}
+        <tr class="text-center">
+            <th class='text-dark'>{{blog.id|capfirst}}</th>
+            <th class='text-warning'>{{blog.title|capfirst}}</th>
+            <td>{{blog.description}}</td>
+            {% comment %} <td>{{blog.user_id}}</td> {% endcomment %}
+            <td class='text-center'><a href="{% url 'editpost' blog.id %}" class="btn btn-warning">Edit</a>
+            {% comment %} <td class='text-center'><a href="{% url 'deletepost' blog.id %}" class="btn btn-warning">Delete</a> {% endcomment %}
+            <form action="{% url 'deletepost' blog.id %}" method="post"> {% csrf_token %} <input class="btn btn-danger" type="submit" value="Delete"></form></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<h1>{{ck}}</h1>
+{% endblock content %}

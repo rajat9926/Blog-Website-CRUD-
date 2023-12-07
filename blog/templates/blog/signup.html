@@ -1,0 +1,22 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Signup Page{% endblock title %}
+
+
+{% block content %}
+<h1 class="m-3">Please Sign Up</h1>
+    {% if messages %}
+        {% for msg in messages %}
+            <p {% if msg.tags %} class="alert alert-{{msg.tags}}" {% endif %}>{{msg}}</p>
+        {% endfor %}
+    {% endif %}
+    <form action="" method='post' class="my-3" novalidate>
+        {% csrf_token %}
+    {% for items in signupform %}
+        <div class="form-group m-1">
+            {{items.label_tag}} {{items}} <span class='text-warning'>{{items.errors|striptags}}</span>
+        </div>
+    {% endfor %}
+    <br><button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock content %}
